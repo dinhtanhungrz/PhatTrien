@@ -1,0 +1,9 @@
+Mỗi lần người dùng bấm nút Add Task:
+Chương trình lấy danh sách công việc hiện có từ đối tượng quản lý (TaskManager)
+Tính id mới = số lượng phần tử hiện có + 1
+Lấy dữ liệu người dùng nhập từ các ô input (title, description, assignee, status, deadline)
+Tạo một đối tượng Task mới từ dữ liệu này
+Gọi hàm .add() của TaskManager để thêm Task mới vào danh sách
+
+hàm xoá
+tìm vị trí id ng dùng truyền vào
