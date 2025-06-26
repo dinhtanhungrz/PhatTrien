@@ -2,21 +2,56 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý Công việc</title>
+    <title>Quản lý công việc</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        input, textarea, button {
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hệ thống Quản lý Công việc</h1>
+    <div id="ui"></div>
+
+    <!-- Model -->
     <script src="model/task.js"></script>
     <script src="model/taskmanager.js"></script>
     <script src="model/usermanager.js"></script>
 
-    <script src="action/task.action.js"></script>
-    <script src="action/user.action.js"></script>
-
+    <!-- UI -->
     <script src="ui/task.ui.js"></script>
     <script src="ui/user.ui.js"></script>
 
+    <!-- Action -->
+    <script src="action/task.action.js"></script>
+    <script src="action/user.action.js"></script>
+
+    <!-- Init & Main -->
     <script src="init/init.js"></script>
     <script src="main.js"></script>
-</head>
-<body>
-    <div id="ui"></div>
 </body>
 </html>

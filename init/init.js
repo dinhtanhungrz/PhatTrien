@@ -1,18 +1,27 @@
-function initApp() {
-    userManager = new UserManager();
-    let currentUser = userManager.getCurrentUser();
+let userManager = new UserManager();
+let taskManager = new TaskManager();
+let username = null;
+let role = null;
 
-    if (currentUser) {
-        let user = userManager.login(currentUser, null, true);
-        if (user) {
-            username = user.username;
-            role = user.role;
-            taskManager = new TaskManager(username);
+function init() {
+    const current = userManager.getCurrentUser();
+    if (current) {
+        username = current;
+        role = userManager.getRole(current);
+        // taskManager đã khởi tạo chung ở trên
+
+        if (role === "admin") {
             renderTaskTableView();
-            renderTaskListUI(taskManager.getAll());
-            return;
+        } else {
+            renderTaskReadonlyView();
         }
-    }
 
-    renderLoginForm();
+        renderTaskListUI(taskManager.getAll());
+    } else {
+        renderLoginForm();
+    }
+}
+
+if (!userManager.login("admin", "admin123")) {
+    userManager.register("admin", "admin123", "admin");
 }

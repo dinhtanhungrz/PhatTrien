@@ -1,48 +1,45 @@
 class TaskManager {
-    constructor(username) {
-        this.username = username;
-        this.Listtask = [];
+    constructor() {
+        this.taskList = [];
         this.load();
     }
 
     add(task) {
-        this.Listtask.push(task);
-        this.save();
-    }
-
-    remove(id) {
-        this.Listtask = this.Listtask.filter(task => task.id !== id);
+        this.taskList.push(task);
         this.save();
     }
 
     update(id, newTask) {
-        const index = this.Listtask.findIndex(t => t.id === id);
+        const index = this.taskList.findIndex(t => t.id === id);
         if (index !== -1) {
-            this.Listtask[index] = newTask;
+            this.taskList[index] = newTask;
             this.save();
         }
     }
 
+    remove(id) {
+        this.taskList = this.taskList.filter(t => t.id !== id);
+        this.save();
+    }
+
     getById(id) {
-        return this.Listtask.find(task => task.id === id);
+        return this.taskList.find(t => t.id === id);
     }
 
     getAll() {
-        return this.Listtask;
+        return this.taskList;
     }
 
-    searchByName(name) {
-        return this.Listtask.filter(task =>
-            task.title.toLowerCase().includes(name.toLowerCase())
-        );
+    searchByName(keyword) {
+        return this.taskList.filter(t => t.title.toLowerCase().includes(keyword.toLowerCase()));
     }
 
     save() {
-        localStorage.setItem(`taskList_${this.username}`, JSON.stringify(this.Listtask));
+        localStorage.setItem('taskList_all', JSON.stringify(this.taskList));
     }
 
     load() {
-        const data = localStorage.getItem(`taskList_${this.username}`);
-        this.Listtask = data ? JSON.parse(data) : [];
+        const data = localStorage.getItem('taskList_all');
+        this.taskList = data ? JSON.parse(data) : [];
     }
 }

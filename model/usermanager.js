@@ -11,46 +11,13 @@ class UserManager {
         return true;
     }
 
-    login(username, password, skipPasswordCheck = false) {
-        return this.users.find(u =>
-            u.username === username && (skipPasswordCheck || u.password === password)
-        );
-    }
-
-    getAllUsers() {
-        return this.users;
-    }
-
-    updatePassword(username, newPassword) {
-        const user = this.users.find(u => u.username === username);
-        if (user) {
-            user.password = newPassword;
-            this.save();
-            return true;
-        }
-        return false;
-    }
-
-    switchRole(username) {
-        const user = this.users.find(u => u.username === username);
-        if (user) {
-            user.role = user.role === "admin" ? "user" : "admin";
-            this.save();
-        }
+    login(username, password) {
+        return this.users.find(u => u.username === username && u.password === password);
     }
 
     getRole(username) {
         const user = this.users.find(u => u.username === username);
-        return user?.role || null;
-    }
-
-    save() {
-        localStorage.setItem("users", JSON.stringify(this.users));
-    }
-
-    load() {
-        const data = localStorage.getItem("users");
-        this.users = data ? JSON.parse(data) : [];
+        return user ? user.role : null;
     }
 
     setCurrentUser(username) {
@@ -63,5 +30,34 @@ class UserManager {
 
     logout() {
         localStorage.removeItem("currentUser");
+    }
+
+    getAllUsers() {
+        return this.users;
+    }
+
+    updatePassword(username, newPassword) {
+        const user = this.users.find(u => u.username === username);
+        if (!user) return false;
+        user.password = newPassword;
+        this.save();
+        return true;
+    }
+
+    switchRole(username) {
+        const user = this.users.find(u => u.username === username);
+        if (user) {
+            user.role = user.role === "admin" ? "user" : "admin";
+            this.save();
+        }
+    }
+
+    save() {
+        localStorage.setItem("users", JSON.stringify(this.users));
+    }
+
+    load() {
+        const data = localStorage.getItem("users");
+        this.users = data ? JSON.parse(data) : [];
     }
 }

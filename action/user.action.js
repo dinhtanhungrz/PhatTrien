@@ -1,30 +1,29 @@
 function login() {
-    let usernameInput = document.getElementById("username").value;
-    let passwordInput = document.getElementById("password").value;
+    const usernameInput = document.getElementById("username").value;
+    const passwordInput = document.getElementById("password").value;
 
-    let user = userManager.login(usernameInput, passwordInput);
+    const user = userManager.login(usernameInput, passwordInput);
     if (user) {
         username = user.username;
         role = user.role;
         userManager.setCurrentUser(username);
         taskManager = new TaskManager(username);
-        renderTaskTableView();
+        role === "admin" ? renderTaskTableView() : renderTaskReadonlyView();
         renderTaskListUI(taskManager.getAll());
     } else {
-        alert("Đăng nhập thất bại.");
+        alert("Sai tài khoản hoặc mật khẩu.");
     }
 }
 
 function register() {
-    let usernameInput = document.getElementById("username").value;
-    let passwordInput = document.getElementById("password").value;
-
-    let success = userManager.register(usernameInput, passwordInput);
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const success = userManager.register(username, password);
     if (success) {
         alert("Đăng ký thành công.");
         renderLoginForm();
     } else {
-        alert("Tài khoản đã tồn tại.");
+        alert("Tên đăng nhập đã tồn tại.");
     }
 }
 
@@ -34,16 +33,18 @@ function logout() {
 }
 
 function navigateToUserManager() {
-    renderUserManagerUI(userManager.getAllUsers());
+    const users = userManager.getAllUsers();
+    renderUserManagerUI(users);
 }
 
 function changePassword(username) {
-    let newPassword = document.getElementById("newPassword").value;
-    if (userManager.updatePassword(username, newPassword)) {
-        alert("Đổi mật khẩu thành công.");
+    const newPassword = document.getElementById(`newPassword_${username}`).value;
+    const success = userManager.updatePassword(username, newPassword);
+    if (success) {
+        alert("Cập nhật thành công.");
         navigateToUserManager();
     } else {
-        alert("Thất bại.");
+        alert("Không thể cập nhật mật khẩu.");
     }
 }
 
